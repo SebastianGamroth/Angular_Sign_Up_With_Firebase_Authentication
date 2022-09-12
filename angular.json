@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Angular_Sign_Up_With_Firebase_Authentication:build:production",
+            "firebaseProject": "angular-sign-up-227d3",
+            "firebaseHostingSite": "angular-sign-up-227d3"
+          }
         }
       }
     }

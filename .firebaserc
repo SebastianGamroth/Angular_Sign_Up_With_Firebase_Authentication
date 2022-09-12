@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-sign-up-227d3": {
+      "hosting": {
+        "Angular_Sign_Up_With_Firebase_Authentication": [
+          "angular-sign-up-227d3"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-sign-up-227d3"
+  }
+}
