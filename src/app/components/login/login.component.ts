@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +20,10 @@ export class LoginComponent implements OnInit {
     'password': 'password',
   };
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private toast: HotToastService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -34,4 +40,20 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+  submit() {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
+    const { email, password } = this.loginForm.valid;
+    this.authService.login(email, password).pipe(
+      this.toast.observe({
+        success: 'Logged in successfully',
+        loading: 'Logging in...',
+        error: 'There was an error'
+      })
+    ).subscribe(() => {
+      this.router.navigate(['/home']);
+    });
+  }
 }
