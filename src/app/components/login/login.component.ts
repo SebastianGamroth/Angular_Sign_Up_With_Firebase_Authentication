@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import { getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -14,11 +15,8 @@ export class LoginComponent implements OnInit {
   //   email: new FormGroup('', [Validators.required, Validators.email]),
   //   password: new FormGroup('', [Validators.required]),
   // });
+
   loginForm: any = FormGroup;
-  outPut: any = {
-    'email': 'email',
-    'password': 'password',
-  };
 
   constructor(
     private authService: AuthenticationService,
@@ -41,20 +39,42 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.loginForm.value.email);
+
     if (!this.loginForm.valid) {
       return;
     }
 
-    const { email, password } = this.loginForm.valid;
-    this.authService.login(email, password).pipe(
-      this.toast.observe({
-        success: 'Logged in successfully',
-        loading: 'Logging in...',
-        error: 'There was an error'
-      })
-    ).subscribe(() => {
-      this.router.navigate(['/home']);
-    });
+
+    // const auth = getAuth();
+    // signInWithEmailAndPassword(auth, this.loginForm.value.email, this.loginForm.value.password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     console.log(user.email);
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log(errorCode, errorMessage);
+    //   });
+
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password)
+      .pipe(
+        this.toast.observe({
+          success: 'Logged in successfully',
+          loading: 'Logging in...',
+          error: 'There was an error'
+        })
+      )
+
+      .subscribe(() => {
+        this.router.navigate(['/home']);
+      });
   }
-  
+
+
+
 }
