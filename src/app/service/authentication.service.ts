@@ -12,7 +12,13 @@ export class AuthenticationService {
   constructor(private auth: Auth) { }
 
   login(email: string, password: string) {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+    return from(signInWithEmailAndPassword(this.auth, email, password)
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      })
+      );
   }
 
   signUp(name: string, email: string, password: string) {

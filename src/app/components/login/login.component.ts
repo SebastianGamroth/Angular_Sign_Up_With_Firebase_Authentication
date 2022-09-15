@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.loginForm.value.email);
+    // console.log(this.loginForm.value.email);
 
     if (!this.loginForm.valid) {
       return;
@@ -72,9 +72,9 @@ export class LoginComponent implements OnInit {
 
       .subscribe(() => {
         this.router.navigate(['/home']);
-      });
-  }
+      })
 
+  }
 
 
 }
