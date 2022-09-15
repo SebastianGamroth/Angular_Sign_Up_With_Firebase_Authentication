@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -28,12 +31,13 @@ export class SignUpComponent implements OnInit {
     confirmPassword: new FormControl('', Validators.required)
   }, { validators: passwordsMatchValidator() });
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+    private toast: HotToastService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-  }
-
-  submit() {
   }
 
   get name() {
@@ -50,6 +54,22 @@ export class SignUpComponent implements OnInit {
 
   get confirmPassword() {
     return this.signUpForm.get('confirmPassword');
+  }
+
+
+  submit() {
+    if (!this.signUpForm.valid) return;
+
+    const { name, email, password } = this.signUpForm.value;
+    this.authService.signUp(name, email, password).pipe(
+      this.toast.observe({
+        success: 'Congrats! You are all signed up',
+        loading: 'Signing in',
+        error: ({ message }) => `${message}`
+      })
+    ).subscribe(() => {
+      this.router.navigate(['/home']);
+    })
   }
 
 }
