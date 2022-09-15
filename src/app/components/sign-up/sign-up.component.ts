@@ -7,7 +7,7 @@ export function passwordsMatchValidator(): ValidatorFn {
     const confirmPassword = control.get('confirmPassword')?.value;
 
     if (password && confirmPassword && password !== confirmPassword) {
-      return { paswordsDontMatch: true }
+      return { passwordsDontMatch: true }
     }
 
     return null;
