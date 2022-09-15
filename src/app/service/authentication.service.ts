@@ -13,12 +13,12 @@ export class AuthenticationService {
 
   login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.auth, email, password)
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      })
-      );
+      // .catch((error) => {
+      //   const errorCode = error.code;
+      //   const errorMessage = error.message;
+      //   console.log(errorCode, errorMessage);
+      // })
+    );
   }
 
   signUp(name: string, email: string, password: string) {
